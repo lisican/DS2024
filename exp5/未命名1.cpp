@@ -2,14 +2,12 @@
 #include <ctime>
 #include <cstdlib>
 
-// ½»»»Á½¸öÔªËØµÄÖµ
 void swap(int& a, int& b) {
     int temp = a;
     a = b;
     b = temp;
 }
 
-// ÆğÅİÅÅĞò
 void bubbleSort(int arr[], int n) {
     for (int i = 0; i < n - 1; i++) {
         for (int j = 0; j < n - i - 1; j++) {
@@ -20,7 +18,6 @@ void bubbleSort(int arr[], int n) {
     }
 }
 
-// ²åÈëÅÅĞò
 void insertionSort(int arr[], int n) {
     for (int i = 1; i < n; i++) {
         int key = arr[i];
@@ -33,7 +30,6 @@ void insertionSort(int arr[], int n) {
     }
 }
 
-// Ñ¡ÔñÅÅĞò
 void selectionSort(int arr[], int n) {
     for (int i = 0; i < n - 1; i++) {
         int minIndex = i;
@@ -48,7 +44,6 @@ void selectionSort(int arr[], int n) {
     }
 }
 
-// ¹é²¢²Ù×÷£¬ÓÃÓÚ¹é²¢ÅÅĞò
 void merge(int arr[], int left, int mid, int right) {
     int n1 = mid - left + 1;
     int n2 = right - mid;
@@ -79,7 +74,6 @@ void merge(int arr[], int left, int mid, int right) {
     delete[] R;
 }
 
-// ¹é²¢ÅÅĞò
 void mergeSort(int arr[], int left, int right) {
     if (left < right) {
         int mid = left + (right - left) / 2;
@@ -89,7 +83,6 @@ void mergeSort(int arr[], int left, int right) {
     }
 }
 
-// ¿ìËÙÅÅĞò»®·Öº¯Êı
 int partition(int arr[], int low, int high) {
     int pivot = arr[high];
     int i = low - 1;
@@ -103,7 +96,6 @@ int partition(int arr[], int low, int high) {
     return i + 1;
 }
 
-// ¿ìËÙÅÅĞò
 void quickSort(int arr[], int low, int high) {
     if (low < high) {
         int pi = partition(arr, low, high);
@@ -112,7 +104,6 @@ void quickSort(int arr[], int low, int high) {
     }
 }
 
-// ¶Ñµ÷Õûº¯Êı£¬ÓÃÓÚ¶ÑÅÅĞò
 void heapify(int arr[], int n, int i) {
     int largest = i;
     int l = 2 * i + 1;
@@ -129,7 +120,6 @@ void heapify(int arr[], int n, int i) {
     }
 }
 
-// ¶ÑÅÅĞò
 void heapSort(int arr[], int n) {
     for (int i = n / 2 - 1; i >= 0; i--) {
         heapify(arr, n, i);
@@ -140,7 +130,6 @@ void heapSort(int arr[], int n) {
     }
 }
 
-// ´òÓ¡Êı×é
 void printArray(int arr[], int n) {
     for (int i = 0; i < n; i++) {
         std::cout << arr[i] << " ";
@@ -148,12 +137,10 @@ void printArray(int arr[], int n) {
     std::cout << std::endl;
 }
 
-// ²âÊÔº¯Êı£¬²âÊÔÃ¿ÖÖÅÅĞòËã·¨ÔÚ²»Í¬ĞòÁĞÏÂµÄĞÔÄÜ
 void testSortingAlgorithms() {
-    const int size = 10000;  // ¿ÉÒÔµ÷Õû²âÊÔÊı¾İ¹æÄ£
+    const int size = 10000;  
     int arr[size];
 
-    // Ë³ĞòĞòÁĞ²âÊÔ
     for (int i = 0; i < size; i++) {
         arr[i] = i;
     }
@@ -171,34 +158,34 @@ void testSortingAlgorithms() {
     start = clock();
     bubbleSort(arrCopy1, size);
     end = clock();
-    std::cout << "Ë³ĞòĞòÁĞ ÆğÅİÅÅĞòÊ±¼ä: " << (double)(end - start) / CLOCKS_PER_SEC << " Ãë" << std::endl;
+    std::cout << "é¡ºåºåºåˆ— èµ·æ³¡æ’åºæ—¶é—´: " << (double)(end - start) / CLOCKS_PER_SEC << " ç§’" << std::endl;
 
     start = clock();
     insertionSort(arrCopy2, size);
     end = clock();
-    std::cout << "Ë³ĞòĞòÁĞ ²åÈëÅÅĞòÊ±¼ä: " << (double)(end - start) / CLOCKS_PER_SEC << " Ãë" << std::endl;
+    std::cout << "é¡ºåºåºåˆ— æ’å…¥æ’åºæ—¶é—´: " << (double)(end - start) / CLOCKS_PER_SEC << " ç§’" << std::endl;
 
     start = clock();
     selectionSort(arrCopy3, size);
     end = clock();
-    std::cout << "Ë³ĞòĞòÁĞ Ñ¡ÔñÅÅĞòÊ±¼ä: " << (double)(end - start) / CLOCKS_PER_SEC << " Ãë" << std::endl;
+    std::cout << "é¡ºåºåºåˆ— é€‰æ‹©æ’åºæ—¶é—´: " << (double)(end - start) / CLOCKS_PER_SEC << " ç§’" << std::endl;
 
     start = clock();
     mergeSort(arrCopy4, 0, size - 1);
     end = clock();
-    std::cout << "Ë³ĞòĞòÁĞ ¹é²¢ÅÅĞòÊ±¼ä: " << (double)(end - start) / CLOCKS_PER_SEC << " Ãë" << std::endl;
+    std::cout << "é¡ºåºåºåˆ— å½’å¹¶æ’åºæ—¶é—´: " << (double)(end - start) / CLOCKS_PER_SEC << " ç§’" << std::endl;
 
     start = clock();
     quickSort(arrCopy5, 0, size - 1);
     end = clock();
-    std::cout << "Ë³ĞòĞòÁĞ ¿ìËÙÅÅĞòÊ±¼ä: " << (double)(end - start) / CLOCKS_PER_SEC << " Ãë" << std::endl;
+    std::cout << "é¡ºåºåºåˆ— å¿«é€Ÿæ’åºæ—¶é—´: " << (double)(end - start) / CLOCKS_PER_SEC << " ç§’" << std::endl;
 
     start = clock();
     heapSort(arrCopy6, size);
     end = clock();
-    std::cout << "Ë³ĞòĞòÁĞ ¶ÑÅÅĞòÊ±¼ä: " << (double)(end - start) / CLOCKS_PER_SEC << " Ãë" << std::endl;
+    std::cout << "é¡ºåºåºåˆ— å †æ’åºæ—¶é—´: " << (double)(end - start) / CLOCKS_PER_SEC << " ç§’" << std::endl;
 
-    // ÄæĞòĞòÁĞ²âÊÔ
+    // é€†åºåºåˆ—æµ‹è¯•
     for (int i = 0; i < size; i++) {
         arr[i] = size - i;
     }
@@ -208,35 +195,34 @@ void testSortingAlgorithms() {
     start = clock();
     bubbleSort(arrCopy1, size);
     end = clock();
-    std::cout << "ÄæĞòĞòÁĞ ÆğÅİÅÅĞòÊ±¼ä: " << (double)(end - start) / CLOCKS_PER_SEC << " Ãë" << std::endl;
+    std::cout << "é€†åºåºåˆ— èµ·æ³¡æ’åºæ—¶é—´: " << (double)(end - start) / CLOCKS_PER_SEC << " ç§’" << std::endl;
 
     start = clock();
     insertionSort(arrCopy2, size);
     end = clock();
-    std::cout << "ÄæĞòĞòÁĞ ²åÈëÅÅĞòÊ±¼ä: " << (double)(end - start) / CLOCKS_PER_SEC << " Ãë" << std::endl;
+    std::cout << "é€†åºåºåˆ— æ’å…¥æ’åºæ—¶é—´: " << (double)(end - start) / CLOCKS_PER_SEC << " ç§’" << std::endl;
 
     start = clock();
     selectionSort(arrCopy3, size);
     end = clock();
-    std::cout << "ÄæĞòĞòÁĞ Ñ¡ÔñÅÅĞòÊ±¼ä: " << (double)(end - start) / CLOCKS_PER_SEC << " Ãë" << std::endl;
+    std::cout << "é€†åºåºåˆ— é€‰æ‹©æ’åºæ—¶é—´: " << (double)(end - start) / CLOCKS_PER_SEC << " ç§’" << std::endl;
 
     start = clock();
     mergeSort(arrCopy4, 0, size - 1);
     end = clock();
-    std::cout << "ÄæĞòĞòÁĞ ¹é²¢ÅÅĞòÊ±¼ä: " << (double)(end - start) / CLOCKS_PER_SEC << " Ãë" << std::endl;
+    std::cout << "é€†åºåºåˆ— å½’å¹¶æ’åºæ—¶é—´: " << (double)(end - start) / CLOCKS_PER_SEC << " ç§’" << std::endl;
 
     start = clock();
     quickSort(arrCopy5, 0, size - 1);
     end = clock();
-    std::cout << "ÄæĞòĞòÁĞ ¿ìËÙÅÅĞòÊ±¼ä: " << (double)(end - start) / CLOCKS_PER_SEC << " Ãë" << std::endl;
+    std::cout << "é€†åºåºåˆ— å¿«é€Ÿæ’åºæ—¶é—´: " << (double)(end - start) / CLOCKS_PER_SEC << " ç§’" << std::endl;
 
     start = clock();
     heapSort(arrCopy6, size);
     end = clock();
-    std::cout << "ÄæĞòĞòÁĞ ¶ÑÅÅĞòÊ±¼ä: " << (double)(end - start) / CLOCKS_PER_SEC << " Ãë" << std::endl;
+    std::cout << "é€†åºåºåˆ— å †æ’åºæ—¶é—´: " << (double)(end - start) / CLOCKS_PER_SEC << " ç§’" << std::endl;
 
-    // Ëæ»úĞòÁĞ²âÊÔ
-    std::srand((unsigned int)time(NULL));  // Ê¹ÓÃµ±Ç°Ê±¼ä×÷ÎªËæ»úÊıÖÖ×Ó
+    std::srand((unsigned int)time(NULL));  
     for (int i = 0; i < size; i++) {
         arr[i] = std::rand();
     }
@@ -246,32 +232,32 @@ void testSortingAlgorithms() {
     start = clock();
     bubbleSort(arrCopy1, size);
     end = clock();
-    std::cout << "Ëæ»úĞòÁĞ ÆğÅİÅÅĞòÊ±¼ä: " << (double)(end - start) / CLOCKS_PER_SEC << " Ãë" << std::endl;
+    std::cout << "éšæœºåºåˆ— èµ·æ³¡æ’åºæ—¶é—´: " << (double)(end - start) / CLOCKS_PER_SEC << " ç§’" << std::endl;
 
     start = clock();
     insertionSort(arrCopy2, size);
     end = clock();
-    std::cout << "Ëæ»úĞòÁĞ ²åÈëÅÅĞòÊ±¼ä: " << (double)(end - start) / CLOCKS_PER_SEC << " Ãë" << std::endl;
+    std::cout << "éšæœºåºåˆ— æ’å…¥æ’åºæ—¶é—´: " << (double)(end - start) / CLOCKS_PER_SEC << " ç§’" << std::endl;
 
     start = clock();
     selectionSort(arrCopy3, size);
     end = clock();
-    std::cout << "Ëæ»úĞòÁĞ Ñ¡ÔñÅÅĞòÊ±¼ä: " << (double)(end - start) / CLOCKS_PER_SEC << " Ãë" << std::endl;
+    std::cout << "éšæœºåºåˆ— é€‰æ‹©æ’åºæ—¶é—´: " << (double)(end - start) / CLOCKS_PER_SEC << " ç§’" << std::endl;
 
     start = clock();
     mergeSort(arrCopy4, 0, size - 1);
     end = clock();
-    std::cout << "Ëæ»úĞòÁĞ ¹é²¢ÅÅĞòÊ±¼ä: " << (double)(end - start) / CLOCKS_PER_SEC << " Ãë" << std::endl;
+    std::cout << "éšæœºåºåˆ— å½’å¹¶æ’åºæ—¶é—´: " << (double)(end - start) / CLOCKS_PER_SEC << " ç§’" << std::endl;
 
     start = clock();
     quickSort(arrCopy5, 0, size - 1);
     end = clock();
-    std::cout << "Ëæ»úĞòÁĞ ¿ìËÙÅÅĞòÊ±¼ä: " << (double)(end - start) / CLOCKS_PER_SEC << " Ãë" << std::endl;
+    std::cout << "éšæœºåºåˆ— å¿«é€Ÿæ’åºæ—¶é—´: " << (double)(end - start) / CLOCKS_PER_SEC << " ç§’" << std::endl;
 
     start = clock();
     heapSort(arrCopy6, size);
     end = clock();
-    std::cout << "Ëæ»úĞòÁĞ ¶ÑÅÅĞòÊ±¼ä: " << (double)(end - start) / CLOCKS_PER_SEC << " Ãë" << std::endl;
+    std::cout << "éšæœºåºåˆ— å †æ’åºæ—¶é—´: " << (double)(end - start) / CLOCKS_PER_SEC << " ç§’" << std::endl;
 }
 
 int main() {
