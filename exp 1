@@ -7,32 +7,32 @@
 
 using namespace std;
 
-// ¸´ÊıÀàµÄ¶¨Òå
+// å¤æ•°ç±»çš„å®šä¹‰
 class Complex {
 public:
-    double real;  // Êµ²¿
-    double imag;  // Ğé²¿
+    double real;  // å®éƒ¨
+    double imag;  // è™šéƒ¨
     Complex(double r = 0, double i = 0) : real(r), imag(i) {}
 
-    // ¼ÆËã¸´ÊıµÄÄ£
+    // è®¡ç®—å¤æ•°çš„æ¨¡
     double modulus() const {
         return sqrt(real * real + imag * imag);
     }
 
-    // ÖØÔØ==ÔËËã·û£¬ÓÃÓÚ±È½ÏÁ½¸ö¸´ÊıÊÇ·ñÏàµÈ£¨Êµ²¿ºÍĞé²¿¾ùÏàÍ¬£©
+    // é‡è½½==è¿ç®—ç¬¦ï¼Œç”¨äºæ¯”è¾ƒä¸¤ä¸ªå¤æ•°æ˜¯å¦ç›¸ç­‰ï¼ˆå®éƒ¨å’Œè™šéƒ¨å‡ç›¸åŒï¼‰
     bool operator==(const Complex& other) const {
         return real == other.real && imag == other.imag;
     }
 };
 
-// ½»»»Á½¸ö¸´ÊıµÄº¯Êı£¬ÓÃÓÚÅÅĞòËã·¨ÖĞ
+// äº¤æ¢ä¸¤ä¸ªå¤æ•°çš„å‡½æ•°ï¼Œç”¨äºæ’åºç®—æ³•ä¸­
 void swapComplex(Complex& a, Complex& b) {
     Complex temp = a;
     a = b;
     b = temp;
 }
 
-// ÆğÅİÅÅĞò£¨ÒÔ¸´ÊıµÄÄ£Îª»ù×¼½øĞĞÅÅĞò£¬Ä£ÏàÍ¬µÄÇé¿öÏÂ£¬ÒÔÊµ²¿Îª»ù×¼£©
+// èµ·æ³¡æ’åºï¼ˆä»¥å¤æ•°çš„æ¨¡ä¸ºåŸºå‡†è¿›è¡Œæ’åºï¼Œæ¨¡ç›¸åŒçš„æƒ…å†µä¸‹ï¼Œä»¥å®éƒ¨ä¸ºåŸºå‡†ï¼‰
 void bubbleSort(vector<Complex>& vec) {
     int n = vec.size();
     for (int i = 0; i < n - 1; ++i) {
@@ -46,7 +46,7 @@ void bubbleSort(vector<Complex>& vec) {
     }
 }
 
-// ¹é²¢Á½¸öÒÑÅÅĞòµÄ×ÓÏòÁ¿
+// å½’å¹¶ä¸¤ä¸ªå·²æ’åºçš„å­å‘é‡
 void merge(vector<Complex>& vec, int left, int mid, int right) {
     int n1 = mid - left + 1;
     int n2 = right - mid;
@@ -84,7 +84,7 @@ void merge(vector<Complex>& vec, int left, int mid, int right) {
     }
 }
 
-// ¹é²¢ÅÅĞò£¨ÒÔ¸´ÊıµÄÄ£Îª»ù×¼½øĞĞÅÅĞò£¬Ä£ÏàÍ¬µÄÇé¿öÏÂ£¬ÒÔÊµ²¿Îª»ù×¼£©
+// å½’å¹¶æ’åºï¼ˆä»¥å¤æ•°çš„æ¨¡ä¸ºåŸºå‡†è¿›è¡Œæ’åºï¼Œæ¨¡ç›¸åŒçš„æƒ…å†µä¸‹ï¼Œä»¥å®éƒ¨ä¸ºåŸºå‡†ï¼‰
 void mergeSort(vector<Complex>& vec, int left, int right) {
     if (left < right) {
         int mid = left + (right - left) / 2;
@@ -94,19 +94,19 @@ void mergeSort(vector<Complex>& vec, int left, int right) {
     }
 }
 
-// Éú³ÉËæ»úµÄ¸´ÊıÏòÁ¿£¨ÓĞÖØ¸´Ïî£©
+// ç”Ÿæˆéšæœºçš„å¤æ•°å‘é‡ï¼ˆæœ‰é‡å¤é¡¹ï¼‰
 vector<Complex> generateRandomComplexVector(int size) {
     vector<Complex> result;
     srand(static_cast<unsigned int>(time(NULL)));
     for (int i = 0; i < size; ++i) {
-        double realPart = static_cast<double>(rand()) / RAND_MAX * 10 - 5;  // Éú³É·¶Î§ÔÚ[-5, 5]µÄÊµ²¿
-        double imagPart = static_cast<double>(rand()) / RAND_MAX * 10 - 5;  // Éú³É·¶Î§ÔÚ[-5, 5]µÄĞé²¿
+        double realPart = static_cast<double>(rand()) / RAND_MAX * 10 - 5;  // ç”ŸæˆèŒƒå›´åœ¨[-5, 5]çš„å®éƒ¨
+        double imagPart = static_cast<double>(rand()) / RAND_MAX * 10 - 5;  // ç”ŸæˆèŒƒå›´åœ¨[-5, 5]çš„è™šéƒ¨
         result.push_back(Complex(realPart, imagPart));
     }
     return result;
 }
 
-// ÖÃÂÒÏòÁ¿£¨Ëæ»ú´òÂÒ£©
+// ç½®ä¹±å‘é‡ï¼ˆéšæœºæ‰“ä¹±ï¼‰
 void shuffleVector(vector<Complex>& vec) {
     int n = vec.size();
     for (int i = 0; i < n - 1; ++i) {
@@ -115,21 +115,21 @@ void shuffleVector(vector<Complex>& vec) {
     }
 }
 
-// ²éÕÒ¸´Êı£¨Êµ²¿ºÍĞé²¿¾ùÏàÍ¬£©£¬ÕÒµ½·µ»Øµü´úÆ÷£¬Ã»ÕÒµ½·µ»Øvec.end()
+// æŸ¥æ‰¾å¤æ•°ï¼ˆå®éƒ¨å’Œè™šéƒ¨å‡ç›¸åŒï¼‰ï¼Œæ‰¾åˆ°è¿”å›è¿­ä»£å™¨ï¼Œæ²¡æ‰¾åˆ°è¿”å›vec.end()
 vector<Complex>::const_iterator findComplex(const vector<Complex>& vec, const Complex& target) {
     return find(vec.begin(), vec.end(), target);
 }
 
-// ²åÈë¸´Êıµ½ÏòÁ¿ÖĞ
+// æ’å…¥å¤æ•°åˆ°å‘é‡ä¸­
 void insertComplex(vector<Complex>& vec, const Complex& num) {
     vec.push_back(num);
 }
 
-// É¾³ı¸´Êı£¨Êµ²¿ºÍĞé²¿¾ùÏàÍ¬£©£¬·µ»ØÊÇ·ñÉ¾³ı³É¹¦
+// åˆ é™¤å¤æ•°ï¼ˆå®éƒ¨å’Œè™šéƒ¨å‡ç›¸åŒï¼‰ï¼Œè¿”å›æ˜¯å¦åˆ é™¤æˆåŠŸ
 bool deleteComplex(vector<Complex>& vec, const Complex& target) {
     vector<Complex>::const_iterator it = findComplex(vec, target);
     if (it!= vec.end()) {
-        // ½«const_iterator×ª»»ÎªiteratorÀàĞÍ£¬ÒòÎªeraseº¯ÊıÒªÇó·ÇconstµÄµü´úÆ÷
+        // å°†const_iteratorè½¬æ¢ä¸ºiteratorç±»å‹ï¼Œå› ä¸ºeraseå‡½æ•°è¦æ±‚éconstçš„è¿­ä»£å™¨
         vector<Complex>::iterator nonConstIt = const_cast<vector<Complex>::iterator>(it);
         vec.erase(nonConstIt);
         return true;
@@ -137,7 +137,7 @@ bool deleteComplex(vector<Complex>& vec, const Complex& target) {
     return false;
 }
 
-// Î¨Ò»»¯ÏòÁ¿£¨È¥³ıÖØ¸´ÔªËØ£©
+// å”¯ä¸€åŒ–å‘é‡ï¼ˆå»é™¤é‡å¤å…ƒç´ ï¼‰
 struct ComplexCompare {
     bool operator()(const Complex& a, const Complex& b) const {
         return a.modulus() < b.modulus() || (a.modulus() == b.modulus() && a.real < b.real);
@@ -148,7 +148,7 @@ void uniqueVector(vector<Complex>& vec) {
     vec.erase(unique(vec.begin(), vec.end()), vec.end());
 }
 
-// Çø¼ä²éÕÒËã·¨£¬²éÕÒ³öÄ£½éÓÚ[m1, m2) µÄËùÓĞÔªËØ£¬°´Ğò´æÓÚÒ»¸ö×ÓÏòÁ¿ÖĞ×÷Îª·µ»ØÖµ
+// åŒºé—´æŸ¥æ‰¾ç®—æ³•ï¼ŒæŸ¥æ‰¾å‡ºæ¨¡ä»‹äº[m1, m2) çš„æ‰€æœ‰å…ƒç´ ï¼ŒæŒ‰åºå­˜äºä¸€ä¸ªå­å‘é‡ä¸­ä½œä¸ºè¿”å›å€¼
 vector<Complex> rangeSearch(const vector<Complex>& vec, double m1, double m2) {
     vector<Complex> result;
     for (vector<Complex>::const_iterator it = vec.begin(); it!= vec.end(); ++it) {
@@ -160,19 +160,19 @@ vector<Complex> rangeSearch(const vector<Complex>& vec, double m1, double m2) {
     return result;
 }
 
-// ²âÊÔº¯Êı£¬±È½ÏÆğÅİÅÅĞòºÍ¹é²¢ÅÅĞòµÄĞ§ÂÊ
+// æµ‹è¯•å‡½æ•°ï¼Œæ¯”è¾ƒèµ·æ³¡æ’åºå’Œå½’å¹¶æ’åºçš„æ•ˆç‡
 void testSortEfficiency(vector<Complex>& vec) {
     vector<Complex> copy1 = vec;
     vector<Complex> copy2 = vec;
     clock_t start, end;
 
-    // ²âÊÔÆğÅİÅÅĞò
+    // æµ‹è¯•èµ·æ³¡æ’åº
     start = clock();
     bubbleSort(copy1);
     end = clock();
     cout << "Bubble Sort Time: " << double(end - start) / CLOCKS_PER_SEC << " seconds" << endl;
 
-    // ²âÊÔ¹é²¢ÅÅĞò
+    // æµ‹è¯•å½’å¹¶æ’åº
     start = clock();
     mergeSort(copy2, 0, copy2.size() - 1);
     end = clock();
@@ -180,10 +180,10 @@ void testSortEfficiency(vector<Complex>& vec) {
 }
 
 int main() {
-    // Éú³ÉËæ»úµÄ¸´ÊıÏòÁ¿
+    // ç”Ÿæˆéšæœºçš„å¤æ•°å‘é‡
     vector<Complex> complexVec = generateRandomComplexVector(10);
 
-    // ÖÃÂÒ²Ù×÷²âÊÔ
+    // ç½®ä¹±æ“ä½œæµ‹è¯•
     vector<Complex> shuffledVec = complexVec;
     shuffleVector(shuffledVec);
     cout << "Shuffled Vector: ";
@@ -192,7 +192,7 @@ int main() {
     }
     cout << endl;
 
-    // ²éÕÒ²Ù×÷²âÊÔ
+    // æŸ¥æ‰¾æ“ä½œæµ‹è¯•
     Complex target(complexVec[3].real, complexVec[3].imag);
     vector<Complex>::const_iterator it = findComplex(complexVec, target);
     if (it!= complexVec.end()) {
@@ -202,7 +202,7 @@ int main() {
         cout << "Not found" << endl;
     }
 
-    // ²åÈë²Ù×÷²âÊÔ
+    // æ’å…¥æ“ä½œæµ‹è¯•
     Complex newComplex(2.5, 3.5);
     insertComplex(complexVec, newComplex);
     cout << "After Insert: ";
@@ -211,7 +211,7 @@ int main() {
     }
     cout << endl;
 
-    // É¾³ı²Ù×÷²âÊÔ
+    // åˆ é™¤æ“ä½œæµ‹è¯•
     bool deleted = deleteComplex(complexVec, target);
     if (deleted) {
         cout << "Deleted successfully" << endl;
@@ -225,7 +225,7 @@ int main() {
     }
     cout << endl;
 
-    // Î¨Ò»»¯²Ù×÷²âÊÔ
+    // å”¯ä¸€åŒ–æ“ä½œæµ‹è¯•
     vector<Complex> withDuplicates = generateRandomComplexVector(15);
     uniqueVector(withDuplicates);
     cout << "After Unique: ";
@@ -234,24 +234,24 @@ int main() {
     }
     cout << endl;
 
-    // ÅÅĞòĞ§ÂÊ²âÊÔ£¨Ë³ĞòÇé¿ö£©
+    // æ’åºæ•ˆç‡æµ‹è¯•ï¼ˆé¡ºåºæƒ…å†µï¼‰
     vector<Complex> sortedVec = generateRandomComplexVector(10);
     sort(sortedVec.begin(), sortedVec.end(), ComplexCompare());
     cout << "Testing Sort Efficiency in Ordered Case:" << endl;
     testSortEfficiency(sortedVec);
 
-    // ÅÅĞòĞ§ÂÊ²âÊÔ£¨ÂÒĞòÇé¿ö£©
+    // æ’åºæ•ˆç‡æµ‹è¯•ï¼ˆä¹±åºæƒ…å†µï¼‰
     vector<Complex> disorderedVec = generateRandomComplexVector(10);
     cout << "Testing Sort Efficiency in Disordered Case:" << endl;
     testSortEfficiency(disorderedVec);
 
-    // ÅÅĞòĞ§ÂÊ²âÊÔ£¨ÄæĞòÇé¿ö£©
+    // æ’åºæ•ˆç‡æµ‹è¯•ï¼ˆé€†åºæƒ…å†µï¼‰
     vector<Complex> reversedVec = generateRandomComplexVector(10);
     sort(reversedVec.begin(), reversedVec.end(), ComplexCompare());
     cout << "Testing Sort Efficiency in Reversed Case:" << endl;
     testSortEfficiency(reversedVec);
 
-    // Çø¼ä²éÕÒ²âÊÔ
+    // åŒºé—´æŸ¥æ‰¾æµ‹è¯•
     vector<Complex> rangeTestVec = generateRandomComplexVector(20);
     sort(rangeTestVec.begin(), rangeTestVec.end(), ComplexCompare());
     double m1 = 1.0, m2 = 3.0;
