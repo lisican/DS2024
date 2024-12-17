@@ -1,0 +1,266 @@
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+#include <algorithm>
+#include <cmath>
+
+using namespace std;
+
+// 复数类的定义
+class Complex {
+public:
+    double real;  // 实部
+    double imag;  // 虚部
+    Complex(double r = 0, double i = 0) : real(r), imag(i) {}
+
+    // 计算复数的模
+    double modulus() const {
+        return sqrt(real * real + imag * imag);
+    }
+
+    // 重载==运算符，用于比较两个复数是否相等（实部和虚部均相同）
+    bool operator==(const Complex& other) const {
+        return real == other.real && imag == other.imag;
+    }
+};
+
+// 交换两个复数的函数，用于排序算法中
+void swapComplex(Complex& a, Complex& b) {
+    Complex temp = a;
+    a = b;
+    b = temp;
+}
+
+// 起泡排序（以复数的模为基准进行排序，模相同的情况下，以实部为基准）
+void bubbleSort(vector<Complex>& vec) {
+    int n = vec.size();
+    for (int i = 0; i < n - 1; ++i) {
+        for (int j = 0; j < n - i - 1; ++j) {
+            double mod1 = vec[j].modulus();
+            double mod2 = vec[j + 1].modulus();
+            if (mod1 > mod2 || (mod1 == mod2 && vec[j].real > vec[j + 1].real)) {
+                swapComplex(vec[j], vec[j + 1]);
+            }
+        }
+    }
+}
+
+// 归并两个已排序的子向量
+void merge(vector<Complex>& vec, int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+    vector<Complex> L(n1), R(n2);
+    for (int i = 0; i < n1; ++i)
+        L[i] = vec[left + i];
+    for (int j = 0; j < n2; ++j)
+        R[j] = vec[mid + 1 + j];
+
+    int i = 0, j = 0, k = left;
+    while (i < n1 && j < n2) {
+        double mod1 = L[i].modulus();
+        double mod2 = R[j].modulus();
+        if (mod1 < mod2 || (mod1 == mod2 && L[i].real < R[j].real)) {
+            vec[k] = L[i];
+            ++i;
+        }
+        else {
+            vec[k] = R[j];
+            ++j;
+        }
+        ++k;
+    }
+
+    while (i < n1) {
+        vec[k] = L[i];
+        ++i;
+        ++k;
+    }
+
+    while (j < n2) {
+        vec[k] = R[j];
+        ++j;
+        ++k;
+    }
+}
+
+// 归并排序（以复数的模为基准进行排序，模相同的情况下，以实部为基准）
+void mergeSort(vector<Complex>& vec, int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+        mergeSort(vec, left, mid);
+        mergeSort(vec, mid + 1, right);
+        merge(vec, left, mid, right);
+    }
+}
+
+// 生成随机的复数向量（有重复项）
+vector<Complex> generateRandomComplexVector(int size) {
+    vector<Complex> result;
+    srand(static_cast<unsigned int>(time(NULL)));
+    for (int i = 0; i < size; ++i) {
+        double realPart = static_cast<double>(rand()) / RAND_MAX * 10 - 5;  // 生成范围在[-5, 5]的实部
+        double imagPart = static_cast<double>(rand()) / RAND_MAX * 10 - 5;  // 生成范围在[-5, 5]的虚部
+        result.push_back(Complex(realPart, imagPart));
+    }
+    return result;
+}
+
+// 置乱向量（随机打乱）
+void shuffleVector(vector<Complex>& vec) {
+    int n = vec.size();
+    for (int i = 0; i < n - 1; ++i) {
+        int j = i + rand() % (n - i);
+        swapComplex(vec[i], vec[j]);
+    }
+}
+
+// 查找复数（实部和虚部均相同），找到返回迭代器，没找到返回vec.end()
+vector<Complex>::const_iterator findComplex(const vector<Complex>& vec, const Complex& target) {
+    return find(vec.begin(), vec.end(), target);
+}
+
+// 插入复数到向量中
+void insertComplex(vector<Complex>& vec, const Complex& num) {
+    vec.push_back(num);
+}
+
+// 删除复数（实部和虚部均相同），返回是否删除成功
+bool deleteComplex(vector<Complex>& vec, const Complex& target) {
+    vector<Complex>::const_iterator it = findComplex(vec, target);
+    if (it!= vec.end()) {
+        // 将const_iterator转换为iterator类型，因为erase函数要求非const的迭代器
+        vector<Complex>::iterator nonConstIt = const_cast<vector<Complex>::iterator>(it);
+        vec.erase(nonConstIt);
+        return true;
+    }
+    return false;
+}
+
+// 唯一化向量（去除重复元素）
+struct ComplexCompare {
+    bool operator()(const Complex& a, const Complex& b) const {
+        return a.modulus() < b.modulus() || (a.modulus() == b.modulus() && a.real < b.real);
+    }
+};
+void uniqueVector(vector<Complex>& vec) {
+    sort(vec.begin(), vec.end(), ComplexCompare());
+    vec.erase(unique(vec.begin(), vec.end()), vec.end());
+}
+
+// 区间查找算法，查找出模介于[m1, m2) 的所有元素，按序存于一个子向量中作为返回值
+vector<Complex> rangeSearch(const vector<Complex>& vec, double m1, double m2) {
+    vector<Complex> result;
+    for (vector<Complex>::const_iterator it = vec.begin(); it!= vec.end(); ++it) {
+        double mod = it->modulus();
+        if (mod >= m1 && mod < m2) {
+            result.push_back(*it);
+        }
+    }
+    return result;
+}
+
+// 测试函数，比较起泡排序和归并排序的效率
+void testSortEfficiency(vector<Complex>& vec) {
+    vector<Complex> copy1 = vec;
+    vector<Complex> copy2 = vec;
+    clock_t start, end;
+
+    // 测试起泡排序
+    start = clock();
+    bubbleSort(copy1);
+    end = clock();
+    cout << "Bubble Sort Time: " << double(end - start) / CLOCKS_PER_SEC << " seconds" << endl;
+
+    // 测试归并排序
+    start = clock();
+    mergeSort(copy2, 0, copy2.size() - 1);
+    end = clock();
+    cout << "Merge Sort Time: " << double(end - start) / CLOCKS_PER_SEC << " seconds" << endl;
+}
+
+int main() {
+    // 生成随机的复数向量
+    vector<Complex> complexVec = generateRandomComplexVector(10);
+
+    // 置乱操作测试
+    vector<Complex> shuffledVec = complexVec;
+    shuffleVector(shuffledVec);
+    cout << "Shuffled Vector: ";
+    for (vector<Complex>::const_iterator it = shuffledVec.begin(); it!= shuffledVec.end(); ++it) {
+        cout << "(" << it->real << ", " << it->imag << ") ";
+    }
+    cout << endl;
+
+    // 查找操作测试
+    Complex target(complexVec[3].real, complexVec[3].imag);
+    vector<Complex>::const_iterator it = findComplex(complexVec, target);
+    if (it!= complexVec.end()) {
+        cout << "Found: (" << it->real << ", " << it->imag << ")" << endl;
+    }
+    else {
+        cout << "Not found" << endl;
+    }
+
+    // 插入操作测试
+    Complex newComplex(2.5, 3.5);
+    insertComplex(complexVec, newComplex);
+    cout << "After Insert: ";
+    for (vector<Complex>::const_iterator it = complexVec.begin(); it!= complexVec.end(); ++it) {
+        cout << "(" << it->real << ", " << it->imag << ") ";
+    }
+    cout << endl;
+
+    // 删除操作测试
+    bool deleted = deleteComplex(complexVec, target);
+    if (deleted) {
+        cout << "Deleted successfully" << endl;
+    }
+    else {
+        cout << "Deletion failed" << endl;
+    }
+    cout << "After Delete: ";
+    for (vector<Complex>::const_iterator it = complexVec.begin(); it!= complexVec.end(); ++it) {
+        cout << "(" << it->real << ", " << it->imag << ") ";
+    }
+    cout << endl;
+
+    // 唯一化操作测试
+    vector<Complex> withDuplicates = generateRandomComplexVector(15);
+    uniqueVector(withDuplicates);
+    cout << "After Unique: ";
+    for (vector<Complex>::const_iterator it = withDuplicates.begin(); it!= withDuplicates.end(); ++it) {
+        cout << "(" << it->real << ", " << it->imag << ") ";
+    }
+    cout << endl;
+
+    // 排序效率测试（顺序情况）
+    vector<Complex> sortedVec = generateRandomComplexVector(10);
+    sort(sortedVec.begin(), sortedVec.end(), ComplexCompare());
+    cout << "Testing Sort Efficiency in Ordered Case:" << endl;
+    testSortEfficiency(sortedVec);
+
+    // 排序效率测试（乱序情况）
+    vector<Complex> disorderedVec = generateRandomComplexVector(10);
+    cout << "Testing Sort Efficiency in Disordered Case:" << endl;
+    testSortEfficiency(disorderedVec);
+
+    // 排序效率测试（逆序情况）
+    vector<Complex> reversedVec = generateRandomComplexVector(10);
+    sort(reversedVec.begin(), reversedVec.end(), ComplexCompare());
+    cout << "Testing Sort Efficiency in Reversed Case:" << endl;
+    testSortEfficiency(reversedVec);
+
+    // 区间查找测试
+    vector<Complex> rangeTestVec = generateRandomComplexVector(20);
+    sort(rangeTestVec.begin(), rangeTestVec.end(), ComplexCompare());
+    double m1 = 1.0, m2 = 3.0;
+    vector<Complex> resultRange = rangeSearch(rangeTestVec, m1, m2);
+    cout << "Range Search Result: ";
+    for (vector<Component>::const_iterator it = resultRange.begin(); it!= resultRange.end(); ++it) {
+        cout << "(" << it->real << ", " << it->imag << ") ";
+    }
+    cout << endl;
+
+    return 0;
+}
